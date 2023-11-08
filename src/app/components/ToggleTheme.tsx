@@ -21,7 +21,7 @@ export function ToggleTheme() {
   };
 
   return (
-    <Button unstyled onClick={toggleTheme}>
+    <Button onClick={toggleTheme}>
       {computedColorScheme === 'light' ? 'light' : 'dark'}
     </Button>
   );

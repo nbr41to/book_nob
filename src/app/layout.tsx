@@ -22,16 +22,38 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body className={inter.className}>
         <MantineProvider defaultColorScheme='dark'>
-          <header className='flex items-end gap-4'>
-            <h1 className='font-bold text-3xl'>BOOK^NOB</h1>
-            <div className='space-x-4'>
-              <Link href='/'>Home</Link>
-              <Link href='/books'>Books</Link>
+          <header className='flex justify-between items-center py-3 px-4 border-b h-16'>
+            <div className='flex items-end gap-4'>
+              <Link className='font-bold text-2xl group' href='/'>
+                <h1>
+                  <span className='group-hover:hidden'>😋 </span>
+                  <span className='group-hover:inline hidden'>🎃 </span>
+                  BOOK^NOB 📚
+                </h1>
+              </Link>
+              <div className='space-x-4 font-bold'>
+                <Link
+                  className='hover:-translate-y-[2px] inline-block'
+                  href='/'
+                >
+                  Home
+                </Link>
+                <Link
+                  className='hover:-translate-y-[2px] inline-block'
+                  href='/books'
+                >
+                  Books
+                </Link>
+              </div>
             </div>
             <ToggleTheme />
           </header>
-          <main className='p-12'>{children}</main>
-          <footer className='text-center'>progLearning</footer>
+
+          <main className='p-8 h-[calc(100vh-96px)]'>{children}</main>
+
+          <footer className='grid place-content-center font-bold border-t h-8 '>
+            © progLearning
+          </footer>
         </MantineProvider>
       </body>
     </html>
