@@ -44,6 +44,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 >
                   Books
                 </Link>
+                <Link
+                  className='hover:-translate-y-[2px] inline-block'
+                  href='/books/new'
+                >
+                  Add Book
+                </Link>
               </div>
             </div>
             <ToggleTheme />

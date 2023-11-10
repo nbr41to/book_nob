@@ -1,16 +1,14 @@
 import {Suspense} from 'react';
-import {BookInfoCard, BookInfoCardSkeleton} from './components/BookInfoCard';
+import {prisma} from '@/server/prisma/client';
+import {BookCard} from './components/BookCard';
 
 /* バックエンドの処理 */
 const getBooks = async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  const response = await fetch(
-    'https://www.googleapis.com/books/v1/volumes?q={search%20terms}'
-  );
-  const data = await response.json();
+  const books = await prisma.book.findMany();
 
-  return data;
+  return books;
 };
 
 export default async function Page() {
@@ -18,14 +16,8 @@ export default async function Page() {
 
   return (
     <div className='flex flex-wrap gap-2'>
-      {books.items.map((item: any) => (
-        <Suspense key={item.id} fallback={<BookInfoCardSkeleton />}>
-          <BookInfoCard
-            key={item.id}
-            title={item.volumeInfo.title}
-            imageUrl={item.volumeInfo.imageLinks.thumbnail}
-          />
-        </Suspense>
+      {books.map((book) => (
+        <BookCard key={book.id} book={book} />
       ))}
     </div>
   );
