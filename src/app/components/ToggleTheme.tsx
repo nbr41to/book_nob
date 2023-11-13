@@ -4,6 +4,7 @@ import {
   useMantineColorScheme,
   useComputedColorScheme,
   Button,
+  ActionIcon,
 } from '@mantine/core';
 
 export function ToggleTheme() {
@@ -21,8 +22,15 @@ export function ToggleTheme() {
   };
 
   return (
-    <Button onClick={toggleTheme}>
-      {computedColorScheme === 'light' ? 'light' : 'dark'}
-    </Button>
+    <ActionIcon
+      size='xl'
+      variant='transparent'
+      radius={999}
+      onClick={toggleTheme}
+    >
+      <div className='text-4xl'>
+        {computedColorScheme === 'light' ? '🌚' : '🌞'}
+      </div>
+    </ActionIcon>
   );
 }

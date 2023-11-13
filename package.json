@@ -6,17 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db-push": "npx prisma db push",
+    "generate": "npx prisma generate",
     "lint": "next lint"
   },
   "dependencies": {
     "@mantine/core": "^7.2.1",
+    "@mantine/form": "^7.2.2",
     "@mantine/hooks": "^7.2.1",
     "@mantine/notifications": "^7.2.1",
     "@prisma/client": "^5.5.2",
     "next": "14.0.1",
     "ogp-parser": "^0.8.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

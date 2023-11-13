@@ -1,11 +1,13 @@
 import '@/styles/globals.css';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import Link from 'next/link';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {ToggleTheme} from './components/ToggleTheme';
+import {Notifications as MantineNotifications} from '@mantine/notifications';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -22,6 +24,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body className={inter.className}>
         <MantineProvider defaultColorScheme='dark'>
+          <MantineNotifications />
           <header className='flex justify-between items-center py-3 px-4 border-b h-16'>
             <div className='flex items-end gap-4'>
               <Link className='font-bold text-2xl group' href='/'>

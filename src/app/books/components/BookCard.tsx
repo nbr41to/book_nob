@@ -8,7 +8,7 @@ type Props = {
 
 export const BookCard: FC<Props> = ({book}) => {
   return (
-    <div className='border w-56 h-72 rounded flex flex-col gap-2 p-2'>
+    <div className='border w-56 h-72 rounded flex flex-col gap-2 p-2 cursor-pointer hover:scale-105 transition-transform'>
       <Suspense fallback={<BookImageSkeleton />}>
         <BookImage url={book.url} />
       </Suspense>
