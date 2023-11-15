@@ -1,15 +1,19 @@
 'use server';
 
-import {Prisma} from '@prisma/client';
+import {Book, Prisma} from '@prisma/client';
 import {prisma} from './prisma/client';
 import {bookCreateSchema} from './validations/book';
+import {redirect} from 'next/navigation';
+
+type State = {
+  data: Book | null;
+  error: string | null;
+};
 
 export const createBook = async (
-  prevState: {
-    message: string | null;
-  },
+  prevState: State,
   formData: FormData
-): Promise<{message: string | null}> => {
+): Promise<State> => {
   try {
     const data: Prisma.BookCreateInput = {
       title: formData.get('title') as string,
@@ -22,21 +26,21 @@ export const createBook = async (
     const validated = bookCreateSchema.safeParse(data);
     if (!validated.success) {
       return {
-        message: 'Validation error',
+        data: null,
+        error: 'Validation error',
       };
     }
 
     /* Create */
-    const book = await prisma.book.create({
+    await prisma.book.create({
       data: validated.data,
     });
-    // return book;
-    return {
-      message: 'Book created',
-    };
   } catch (error) {
     return {
-      message: 'Internal server error',
+      data: null,
+      error: 'Internal server error',
     };
   }
+
+  redirect('/books');
 };
