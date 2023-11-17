@@ -8,7 +8,7 @@ import Link from "next/link";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ToggleTheme } from "./components/ToggleTheme";
 import { Notifications as MantineNotifications } from "@mantine/notifications";
-import { ClerkProvider, UserButton } from "@clerk/nextjs";
+import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +22,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { userId }: { userId: string | null } = auth();
+
   return (
     <ClerkProvider>
       <html lang="ja">
@@ -59,16 +61,16 @@ export default function RootLayout({
                   >
                     Add Book
                   </Link>
-                  <Link
-                    className="hover:-translate-y-[2px] inline-block"
-                    href="/login"
-                  >
-                    Login
-                  </Link>
                 </div>
               </div>
               <div className="flex gap-4 items-center">
-                <UserButton afterSignOutUrl="/" />
+                {userId ? (
+                  <UserButton afterSignOutUrl="/" />
+                ) : (
+                  <Link className="inline-block font-bold" href="/login">
+                    Sign Up / Login
+                  </Link>
+                )}
                 <ToggleTheme />
               </div>
             </header>

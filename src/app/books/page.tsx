@@ -1,7 +1,6 @@
 import { prisma } from "@/server/prisma/client";
 import { BookCard } from "./components/BookCard";
 
-/* バックエンドの処理 */
 const getBooks = async () => {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
