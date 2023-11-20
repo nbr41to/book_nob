@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { userId }: { userId: string | null } = auth();
-  const isAdmin = userId === "user_2YDD0lITApfj6aNr8KN3TbSgHaz";
+  const isAdmin = userId === process.env.ADMIN_USER_ID;
 
   return (
     <ClerkProvider>
