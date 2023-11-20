@@ -8,20 +8,36 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 
+/**
+ * 本の一覧を取得する
+ */
+export const getBooks = async () => {
+  const books = await prisma.book.findMany({
+    include: {
+      category: true,
+    },
+  });
+
+  return books;
+};
+
 type State = {
   data: Book | null;
   error: string | null;
 };
 
+/**
+ * 本の新規作成
+ */
 export const createBook = async (
   prevState: State,
   formData: FormData
 ): Promise<State> => {
   try {
-    const data: Prisma.BookCreateInput = {
-      title: formData.get("title") as string,
-      url: formData.get("url") as string,
-      category: formData.get("category") as string,
+    const data: Prisma.BookUncheckedCreateInput = {
+      title: String(formData.get("title")),
+      url: String(formData.get("url")),
+      categoryId: Number(formData.get("categoryId")),
       price: Number(formData.get("price")),
     };
 
@@ -48,7 +64,9 @@ export const createBook = async (
   redirect("/books");
 };
 
-/* 本のいいねを1増やす */
+/**
+ * 本のいいねを1増やす
+ */
 export const toggleBookLikes = async (prevState: any, formData: FormData) => {
   const bookId = Number(formData.get("bookId"));
   const { userId }: { userId: string | null } = auth();
@@ -74,4 +92,16 @@ export const toggleBookLikes = async (prevState: any, formData: FormData) => {
   }
 
   revalidatePath("/books/[bookId]");
+};
+
+/**
+ * 本の削除
+ */
+export const deleteBook = async (prevState: any, formData: FormData) => {
+  const bookId = Number(formData.get("bookId"));
+  await prisma.book.delete({
+    where: { id: bookId },
+  });
+
+  revalidatePath("/admin/books");
 };

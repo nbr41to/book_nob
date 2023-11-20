@@ -5,11 +5,12 @@ import Image from "next/image";
 import { formatDate } from "@/utils/date";
 
 const getBook = async (bookId: number) => {
-  const books = await prisma.book.findUnique({
+  const book = await prisma.book.findUnique({
     where: { id: bookId },
+    include: { category: true },
   });
 
-  return books;
+  return book;
 };
 
 const getImageUrl = async (siteUrl: string) => {
@@ -48,7 +49,7 @@ export default async function Page({ params }: { params: { bookId: string } }) {
           />
         </div>
         <LikeButton bookId={book.id} likedIds={book.likes} />
-        <div>Category: {book.category}</div>
+        <div>Category: {book.category.name}</div>
         <div>作成日時: {formatDate(book.createdAt)}</div>
         <div>更新日時: {formatDate(book.updatedAt)}</div>
         <div>{book.price.toLocaleString()}円</div>

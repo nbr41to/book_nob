@@ -1,10 +1,10 @@
-import { Book } from "@prisma/client";
 import { FC, Suspense } from "react";
 import { BookImage, BookImageSkeleton } from "./BookImage";
 import Link from "next/link";
+import { BookWithCategory } from "@/types";
 
 type Props = {
-  book: Book;
+  book: BookWithCategory;
 };
 
 export const BookCard: FC<Props> = ({ book }) => {
@@ -18,7 +18,9 @@ export const BookCard: FC<Props> = ({ book }) => {
       </Suspense>
       <div className="px-2 space-y-1">
         <div className="font-bold text-lg">{book.title}</div>
-        <div className="border rounded text-sm w-fit px-1">{book.category}</div>
+        <div className="border rounded text-sm w-fit px-1">
+          {book.category.name}
+        </div>
         <div className="flex justify-between">
           <div>{book.price.toLocaleString()}円</div>
           <div>♥ {book.likes.length}</div>

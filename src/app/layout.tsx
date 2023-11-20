@@ -23,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { userId }: { userId: string | null } = auth();
+  const isAdmin = userId === "user_2YDD0lITApfj6aNr8KN3TbSgHaz";
 
   return (
     <ClerkProvider>
@@ -61,6 +62,25 @@ export default function RootLayout({
                   >
                     Add Book
                   </Link>
+                  {isAdmin && (
+                    <div className="inline-flex space-x-4">
+                      <div className="pl-4 border-l">
+                        <span className="opacity-60 font-normal">Admin</span>
+                      </div>
+                      <Link
+                        className="hover:-translate-y-[2px] inline-block"
+                        href="/admin/categories"
+                      >
+                        Categories
+                      </Link>
+                      <Link
+                        className="hover:-translate-y-[2px] inline-block"
+                        href="/admin/books"
+                      >
+                        Books
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex gap-4 items-center">

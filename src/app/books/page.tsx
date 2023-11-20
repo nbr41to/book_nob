@@ -1,13 +1,5 @@
-import { prisma } from "@/server/prisma/client";
 import { BookCard } from "./components/BookCard";
-
-const getBooks = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const books = await prisma.book.findMany();
-
-  return books;
-};
+import { getBooks } from "@/server/book";
 
 export default async function Page() {
   const books = await getBooks();
