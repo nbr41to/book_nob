@@ -32,7 +32,7 @@ export const Table: FC<Props> = ({ books }) => {
             <MantineTable.Td>{book.category.name}</MantineTable.Td>
             <MantineTable.Td>{book.likes.length}</MantineTable.Td>
             <MantineTable.Td>
-              <Link href={`/books/${book.id}`}>詳細</Link>
+              <Link href={`/admin/books/${book.id}`}>編集</Link>
             </MantineTable.Td>
             <MantineTable.Td>
               <DeleteButton id={book.id} />

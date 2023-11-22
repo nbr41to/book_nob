@@ -1,11 +1,12 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { createBook } from "@/server/book";
+import { createBook, updateBook } from "@/server/book";
+import { BookWithCategory } from "@/types";
 import { NumberInput, Select, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { Category } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { Book, Category } from "@prisma/client";
+import { redirect, useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
 
@@ -16,23 +17,24 @@ const initialState = {
 };
 
 type Props = {
+  book: BookWithCategory;
   categories: Category[];
 };
-export const CreateForm: FC<Props> = ({ categories }) => {
+export const UpdateForm: FC<Props> = ({ book, categories }) => {
   const router = useRouter();
-  const [formState, formAction] = useFormState(createBook, initialState);
+  const [formState, formAction] = useFormState(updateBook, initialState);
 
   const categoryOptions = categories.map((category) => ({
     value: category.id.toString(),
     label: category.name,
   }));
 
-  /* 作成成功時の処理 */
+  /* 更新成功時の処理 */
   useEffect(() => {
     if (formState.data) {
       notifications.show({
         title: "Success",
-        message: "Book created",
+        message: "Book updated",
       });
       router.back();
     }
@@ -40,11 +42,13 @@ export const CreateForm: FC<Props> = ({ categories }) => {
 
   return (
     <form action={formAction} className="w-80 space-y-3" noValidate>
+      <input type="hidden" name="bookId" value={book.id} />
       <TextInput
         name="title"
         label="Title"
         placeholder="Title"
         required
+        defaultValue={book.title}
         error={formState.validationError?.title?._errors.join(" ")}
       />
       <TextInput
@@ -52,13 +56,14 @@ export const CreateForm: FC<Props> = ({ categories }) => {
         label="URL"
         placeholder="URL"
         required
+        defaultValue={book.url}
         error={formState.validationError?.url?._errors.join(" ")}
       />
       <Select
         label="Category"
         name="categoryId"
         required
-        defaultValue={categoryOptions[0].value}
+        defaultValue={book.categoryId.toString()}
         data={categoryOptions}
       />
       <NumberInput
@@ -66,6 +71,7 @@ export const CreateForm: FC<Props> = ({ categories }) => {
         label="Price"
         placeholder="0"
         required
+        defaultValue={book.price}
         error={formState.validationError?.price?._errors.join(" ")}
       />
       {formState.error && (

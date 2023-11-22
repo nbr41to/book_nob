@@ -3,10 +3,8 @@
 import "server-only";
 import { Book, Prisma } from "@prisma/client";
 import { prisma } from "./prisma/client";
-import { bookCreateSchema } from "./validations/book";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { auth } from "@clerk/nextjs";
 
 /**
  * カテゴリの一覧を取得する

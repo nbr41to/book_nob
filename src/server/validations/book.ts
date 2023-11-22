@@ -2,9 +2,13 @@ import "server-only";
 
 import { z } from "zod";
 
-export const bookCreateSchema = z.object({
-  title: z.coerce.string().min(1),
-  url: z.coerce.string().min(1),
+const bookSchema = z.object({
+  id: z.coerce.number(),
+  title: z.coerce.string().min(1, { message: "タイトルを入力してください。" }),
+  url: z.coerce.string().min(1, { message: "URLを入力してください。" }),
   categoryId: z.coerce.number(),
-  price: z.coerce.number().min(0),
+  price: z.coerce.number().min(0, { message: "0以上の値を入力してください。" }),
 });
+
+export const bookUpdateSchema = bookSchema;
+export const bookCreateSchema = bookUpdateSchema.omit({ id: true });

@@ -1,6 +1,7 @@
 "use client";
 
 import { createBook } from "@/server/book";
+import { createCategory } from "@/server/category";
 import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { Book } from "@prisma/client";
 import { FC } from "react";
@@ -17,7 +18,7 @@ const initialState: State = {
 };
 
 export const CreateForm: FC = () => {
-  const [state, formAction] = useFormState(createBook, initialState);
+  const [state, formAction] = useFormState(createCategory, initialState);
   const { pending } = useFormStatus();
 
   return (

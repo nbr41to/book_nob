@@ -1,6 +1,6 @@
+import { Modal } from "@/app/components/Modal";
 import { UpdateForm } from "./components/UpdateForm";
 import { prisma } from "@/server/prisma/client";
-import { Modal } from "./components/Modal";
 
 const getCategory = async (categoryId: number) => {
   const category = await prisma.category.findUnique({
