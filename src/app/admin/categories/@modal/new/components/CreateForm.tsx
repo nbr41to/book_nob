@@ -22,7 +22,7 @@ export const CreateForm: FC = () => {
   const { pending } = useFormStatus();
 
   return (
-    <form action={formAction} className="w-80 relative space-y-8" noValidate>
+    <form action={formAction} className="relative w-80 space-y-8" noValidate>
       <TextInput
         name="name"
         label="Category name"
@@ -33,7 +33,7 @@ export const CreateForm: FC = () => {
       <Button type="submit" fullWidth>
         Submit
       </Button>
-      {state.error && <p className="text-red-500 font-bold">{state.error}</p>}
+      {state.error && <p className="font-bold text-red-500">{state.error}</p>}
       <LoadingOverlay visible={pending} />
     </form>
   );

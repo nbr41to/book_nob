@@ -9,8 +9,8 @@ export default async function Page() {
 
   return (
     <div>
-      <div className="flex justify-between items-end">
-        <h2 className="font-bold text-2xl py-4">Books</h2>
+      <div className="flex items-end justify-between">
+        <h2 className="py-4 text-2xl font-bold">Books</h2>
         <Button component={Link} href="/admin/books/new">
           Add Book
         </Button>

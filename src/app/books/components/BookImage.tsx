@@ -17,7 +17,7 @@ export const BookImage: FC<Props> = async ({ url }) => {
   const imageUrl = await getImageUrl(url);
 
   return (
-    <div className="min-w-[200px] min-h-[160px] relative">
+    <div className="relative min-h-[160px] min-w-[200px]">
       <Image
         className="object-contain"
         src={imageUrl || "https://placehold.jp/200x160.png"}
@@ -30,5 +30,5 @@ export const BookImage: FC<Props> = async ({ url }) => {
 };
 
 export const BookImageSkeleton = () => {
-  return <div className="w-[200px] h-40 bg-slate-600 animate-pulse" />;
+  return <div className="h-40 w-[200px] animate-pulse bg-slate-600" />;
 };

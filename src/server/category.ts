@@ -25,7 +25,7 @@ type State = {
  */
 export const createCategory = async (
   prevState: State | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<State> => {
   try {
     const data: Prisma.CategoryUncheckedCreateInput = {
@@ -60,7 +60,7 @@ export const createCategory = async (
  */
 export const updateCategory = async (
   prevState: State | null,
-  formData: FormData
+  formData: FormData,
 ): Promise<State> => {
   try {
     const data: Prisma.CategoryUncheckedUpdateInput = {

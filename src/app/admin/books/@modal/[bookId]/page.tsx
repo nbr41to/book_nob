@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { bookId: string } }) {
 
   return (
     <Modal>
-      <div className="mx-auto w-fit pb-8 space-y-8">
+      <div className="mx-auto w-fit space-y-8 pb-8">
         <h2 className="text-2xl font-bold">Update Book</h2>
         <UpdateForm book={book} categories={categories} />
       </div>

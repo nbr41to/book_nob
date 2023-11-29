@@ -15,7 +15,7 @@ export const UpdateForm: FC<Props> = ({ category }) => {
   const { pending } = useFormStatus();
 
   return (
-    <form action={formAction} className="w-80 relative space-y-8" noValidate>
+    <form action={formAction} className="relative w-80 space-y-8" noValidate>
       <input type="hidden" name="categoryId" value={category.id} />
       <TextInput
         name="name"

@@ -75,7 +75,7 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
         error={formState.validationError?.price?._errors.join(" ")}
       />
       {formState.error && (
-        <p className="text-red-500 font-bold">{formState.error}</p>
+        <p className="font-bold text-red-500">{formState.error}</p>
       )}
       <SubmitButton fullWidth>送信</SubmitButton>
     </form>

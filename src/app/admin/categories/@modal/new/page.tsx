@@ -9,7 +9,7 @@ export default function Page() {
 
   return (
     <Modal opened centered onClose={router.back}>
-      <div className="mx-auto w-fit pb-8 space-y-8">
+      <div className="mx-auto w-fit space-y-8 pb-8">
         <h2 className="text-2xl font-bold">Create New Category</h2>
         <CreateForm />
       </div>

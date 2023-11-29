@@ -12,7 +12,7 @@ export const GlobalCartIcon: FC<Props> = async () => {
   return (
     <div className="relative">
       {cartLength > 0 && (
-        <div className="bg-red-500 text-white text-sm font-bold rounded-full absolute -right-1 -top-1 w-5 h-5 z-10 place-items-center grid">
+        <div className="absolute -right-1 -top-1 z-10 grid h-5 w-5 place-items-center rounded-full bg-red-500 text-sm font-bold text-white">
           {cartLength}
         </div>
       )}

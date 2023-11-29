@@ -35,41 +35,41 @@ export default function RootLayout({
         <body className={`${inter.className} min-h-[100dvh]`}>
           <MantineProvider defaultColorScheme="dark">
             <MantineNotifications />
-            <header className="flex justify-between items-center py-3 px-4 border-b h-16">
+            <header className="flex h-16 items-center justify-between border-b px-4 py-3">
               <div className="flex items-end gap-4">
-                <Link className="font-bold text-2xl group" href="/">
+                <Link className="group text-2xl font-bold" href="/">
                   <h1>
                     <span className="group-hover:hidden">😋 </span>
-                    <span className="group-hover:inline hidden">🎃 </span>
+                    <span className="hidden group-hover:inline">🎃 </span>
                     BOOK^NOB 📚
                   </h1>
                 </Link>
                 <div className="space-x-4 font-bold">
                   <Link
-                    className="hover:-translate-y-[2px] inline-block"
+                    className="inline-block hover:-translate-y-[2px]"
                     href="/books"
                   >
                     Books
                   </Link>
                   <Link
-                    className="hover:-translate-y-[2px] inline-block"
+                    className="inline-block hover:-translate-y-[2px]"
                     href="/books/new"
                   >
                     Add Book
                   </Link>
                   {isAdmin && (
                     <div className="inline-flex space-x-4">
-                      <div className="pl-4 border-l">
-                        <span className="opacity-60 font-normal">Admin</span>
+                      <div className="border-l pl-4">
+                        <span className="font-normal opacity-60">Admin</span>
                       </div>
                       <Link
-                        className="hover:-translate-y-[2px] inline-block"
+                        className="inline-block hover:-translate-y-[2px]"
                         href="/admin/categories"
                       >
                         Categories
                       </Link>
                       <Link
-                        className="hover:-translate-y-[2px] inline-block"
+                        className="inline-block hover:-translate-y-[2px]"
                         href="/admin/books"
                       >
                         Books
@@ -78,7 +78,7 @@ export default function RootLayout({
                   )}
                 </div>
               </div>
-              <div className="flex gap-4 items-center">
+              <div className="flex items-center gap-4">
                 {userId ? (
                   <>
                     <GlobalCartIcon />
@@ -95,7 +95,7 @@ export default function RootLayout({
 
             <main className="p-8">{children}</main>
 
-            <footer className="grid place-content-center font-bold border-t h-8 sticky top-full">
+            <footer className="sticky top-full grid h-8 place-content-center border-t font-bold">
               © progLearning
             </footer>
           </MantineProvider>

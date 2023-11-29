@@ -31,11 +31,11 @@ export default async function Page({ params }: { params: { bookId: string } }) {
   if (!book) return <div>Book not found</div>;
 
   return (
-    <div className="w-fit mx-auto font-bold">
+    <div className="mx-auto w-fit font-bold">
       <div className="space-y-3 py-4">
         <h2 className="text-2xl font-bold">{book.title}</h2>
         <a
-          className="underline text-blue-500"
+          className="text-blue-500 underline"
           href={book.url}
           target="_blank"
           rel="noopener noreferrer"

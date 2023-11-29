@@ -1,8 +1,8 @@
 export default function Loading() {
   return (
     <div>
-      <div className="flex gap-2 flex-wrap">
-        <div className="w-56 h-72 bg-slate-600 animate-pulse rounded" />
+      <div className="flex flex-wrap gap-2">
+        <div className="h-72 w-56 animate-pulse rounded bg-slate-600" />
       </div>
     </div>
   );

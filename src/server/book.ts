@@ -47,7 +47,7 @@ type State = {
  */
 export const createBook = async (
   prevState: State,
-  formData: FormData
+  formData: FormData,
 ): Promise<State> => {
   try {
     const data: Prisma.BookUncheckedCreateInput = {
@@ -92,7 +92,7 @@ export const createBook = async (
  */
 export const updateBook = async (
   prevState: State,
-  formData: FormData
+  formData: FormData,
 ): Promise<State> => {
   try {
     const data: Prisma.BookUncheckedUpdateInput = {
