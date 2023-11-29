@@ -11,8 +11,7 @@ export const getCarts = async () => {
   const { userId }: { userId: string | null } = auth();
   if (!userId) return [];
 
-  const carts = await (kv.get(userId) as Promise<CartIds>);
-  if (!carts) return [];
+  const carts = (await (kv.get(userId) as Promise<CartIds>)) || [];
   return carts;
 };
 
@@ -21,7 +20,7 @@ export const addCart = async (prevState: any, formData: FormData) => {
   const { userId }: { userId: string | null } = auth();
   if (!userId) return;
 
-  const currentCarts = await (kv.get(userId) as Promise<CartIds>);
+  const currentCarts = (await (kv.get(userId) as Promise<CartIds>)) || [];
   const bookId = formData.get("bookId");
   if (!bookId || !currentCarts || typeof bookId !== "string") return;
   if (currentCarts.includes(bookId)) return;
