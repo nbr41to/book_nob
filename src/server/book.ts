@@ -7,10 +7,7 @@ import { bookCreateSchema, bookUpdateSchema } from "./validations/book";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 import { ZodError, ZodFormattedError, z } from "zod";
-
-const isZodError = (error: any): error is ZodError => {
-  return error instanceof ZodError;
-};
+import { isZodError } from "@/utils/error";
 
 /**
  * 本の一覧を取得する

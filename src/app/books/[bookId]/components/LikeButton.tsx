@@ -2,7 +2,7 @@
 
 import { SubmitButton } from "@/app/components/SubmitButton";
 import { toggleBookLikes } from "@/server/book";
-import { auth, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { FC } from "react";
 import { useFormState } from "react-dom";
 

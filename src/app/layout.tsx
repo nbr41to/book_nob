@@ -9,6 +9,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ToggleTheme } from "./components/ToggleTheme";
 import { Notifications as MantineNotifications } from "@mantine/notifications";
 import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
+import { GlobalCartIcon } from "./components/GlobalCartIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,7 @@ export default function RootLayout({
         <head>
           <ColorSchemeScript defaultColorScheme="dark" />
         </head>
-        <body className={inter.className}>
+        <body className={`${inter.className} min-h-[100dvh]`}>
           <MantineProvider defaultColorScheme="dark">
             <MantineNotifications />
             <header className="flex justify-between items-center py-3 px-4 border-b h-16">
@@ -44,12 +45,6 @@ export default function RootLayout({
                   </h1>
                 </Link>
                 <div className="space-x-4 font-bold">
-                  <Link
-                    className="hover:-translate-y-[2px] inline-block"
-                    href="/"
-                  >
-                    Home
-                  </Link>
                   <Link
                     className="hover:-translate-y-[2px] inline-block"
                     href="/books"
@@ -85,7 +80,10 @@ export default function RootLayout({
               </div>
               <div className="flex gap-4 items-center">
                 {userId ? (
-                  <UserButton afterSignOutUrl="/" />
+                  <>
+                    <GlobalCartIcon />
+                    <UserButton afterSignOutUrl="/" />
+                  </>
                 ) : (
                   <Link className="inline-block font-bold" href="/login">
                     Sign Up / Login
@@ -95,9 +93,9 @@ export default function RootLayout({
               </div>
             </header>
 
-            <main className="p-8 h-[calc(100vh-96px)]">{children}</main>
+            <main className="p-8">{children}</main>
 
-            <footer className="grid place-content-center font-bold border-t h-8 ">
+            <footer className="grid place-content-center font-bold border-t h-8 sticky top-full">
               © progLearning
             </footer>
           </MantineProvider>

@@ -3,7 +3,10 @@ import { LikeButton } from "./components/LikeButton";
 import { getOgImage } from "@/server/ogp";
 import Image from "next/image";
 import { formatDate } from "@/utils/date";
+import { AddCartButton } from "./components/AddCartButton";
+import { getCarts } from "@/server/redis/cart";
 
+// TODO: /prismaに移動
 const getBook = async (bookId: number) => {
   const book = await prisma.book.findUnique({
     where: { id: bookId },
@@ -23,6 +26,7 @@ export default async function Page({ params }: { params: { bookId: string } }) {
   const bookId = Number(params.bookId);
   const book = await getBook(bookId);
   const imageUrl = await getImageUrl(book?.url ?? "");
+  const cartIds = await getCarts();
 
   if (!book) return <div>Book not found</div>;
 
@@ -48,7 +52,13 @@ export default async function Page({ params }: { params: { bookId: string } }) {
             alt="book image"
           />
         </div>
-        <LikeButton bookId={book.id} likedIds={book.likes} />
+        <div className="flex gap-4">
+          <AddCartButton
+            bookId={book.id}
+            disabled={cartIds.includes(String(book.id))}
+          />
+          <LikeButton bookId={book.id} likedIds={book.likes} />
+        </div>
         <div>Category: {book.category.name}</div>
         <div>作成日時: {formatDate(book.createdAt)}</div>
         <div>更新日時: {formatDate(book.updatedAt)}</div>
