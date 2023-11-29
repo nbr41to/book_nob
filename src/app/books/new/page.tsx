@@ -1,10 +1,13 @@
+import { getCategories } from "@/server/category";
 import { CreateForm } from "./components/CreateForm";
 
-export default function Page() {
+export default async function Page() {
+  const categories = await getCategories();
+
   return (
-    <div className="mx-auto w-fit py-20 space-y-2">
+    <div className="mx-auto w-fit space-y-2 py-20">
       <h2 className="font-bold">New Book</h2>
-      <CreateForm />
+      <CreateForm categories={categories} />
     </div>
   );
 }

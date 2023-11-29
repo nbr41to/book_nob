@@ -1,25 +1,31 @@
-import {Book} from '@prisma/client';
-import {FC, Suspense} from 'react';
-import {BookImage, BookImageSkeleton} from './BookImage';
+import { FC, Suspense } from "react";
+import { BookImage, BookImageSkeleton } from "./BookImage";
+import Link from "next/link";
+import { BookWithCategory } from "@/types";
 
 type Props = {
-  book: Book;
+  book: BookWithCategory;
 };
 
-export const BookCard: FC<Props> = ({book}) => {
+export const BookCard: FC<Props> = ({ book }) => {
   return (
-    <div className='border w-56 h-72 rounded flex flex-col gap-2 p-2 cursor-pointer hover:scale-105 transition-transform'>
+    <Link
+      className="flex h-72 w-56 cursor-pointer flex-col gap-2 rounded border p-2 transition-transform hover:scale-105"
+      href={`/books/${book.id}`}
+    >
       <Suspense fallback={<BookImageSkeleton />}>
         <BookImage url={book.url} />
       </Suspense>
-      <div className='px-2 space-y-1'>
-        <div className='font-bold text-lg'>{book.title}</div>
-        <div className='border rounded text-sm w-fit px-1'>{book.category}</div>
-        <div className='flex justify-between'>
+      <div className="space-y-1 px-2">
+        <div className="text-lg font-bold">{book.title}</div>
+        <div className="w-fit rounded border px-1 text-sm">
+          {book.category.name}
+        </div>
+        <div className="flex justify-between">
           <div>{book.price.toLocaleString()}円</div>
-          <div>♥ {book.likes}</div>
+          <div>♥ {book.likes.length}</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

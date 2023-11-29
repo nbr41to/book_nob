@@ -8,7 +8,8 @@ import Link from "next/link";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ToggleTheme } from "./components/ToggleTheme";
 import { Notifications as MantineNotifications } from "@mantine/notifications";
-import { ClerkProvider, UserButton } from "@clerk/nextjs";
+import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
+import { GlobalCartIcon } from "./components/GlobalCartIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,60 +23,79 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { userId }: { userId: string | null } = auth();
+  const isAdmin = userId === process.env.ADMIN_USER_ID;
+
   return (
     <ClerkProvider>
       <html lang="ja">
         <head>
           <ColorSchemeScript defaultColorScheme="dark" />
         </head>
-        <body className={inter.className}>
+        <body className={`${inter.className} min-h-[100dvh]`}>
           <MantineProvider defaultColorScheme="dark">
             <MantineNotifications />
-            <header className="flex justify-between items-center py-3 px-4 border-b h-16">
+            <header className="flex h-16 items-center justify-between border-b px-4 py-3">
               <div className="flex items-end gap-4">
-                <Link className="font-bold text-2xl group" href="/">
+                <Link className="group text-2xl font-bold" href="/">
                   <h1>
                     <span className="group-hover:hidden">😋 </span>
-                    <span className="group-hover:inline hidden">🎃 </span>
+                    <span className="hidden group-hover:inline">🎃 </span>
                     BOOK^NOB 📚
                   </h1>
                 </Link>
                 <div className="space-x-4 font-bold">
                   <Link
-                    className="hover:-translate-y-[2px] inline-block"
-                    href="/"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    className="hover:-translate-y-[2px] inline-block"
+                    className="inline-block hover:-translate-y-[2px]"
                     href="/books"
                   >
                     Books
                   </Link>
                   <Link
-                    className="hover:-translate-y-[2px] inline-block"
+                    className="inline-block hover:-translate-y-[2px]"
                     href="/books/new"
                   >
                     Add Book
                   </Link>
-                  <Link
-                    className="hover:-translate-y-[2px] inline-block"
-                    href="/login"
-                  >
-                    Login
-                  </Link>
+                  {isAdmin && (
+                    <div className="inline-flex space-x-4">
+                      <div className="border-l pl-4">
+                        <span className="font-normal opacity-60">Admin</span>
+                      </div>
+                      <Link
+                        className="inline-block hover:-translate-y-[2px]"
+                        href="/admin/categories"
+                      >
+                        Categories
+                      </Link>
+                      <Link
+                        className="inline-block hover:-translate-y-[2px]"
+                        href="/admin/books"
+                      >
+                        Books
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="flex gap-4 items-center">
-                <UserButton afterSignOutUrl="/" />
+              <div className="flex items-center gap-4">
+                {userId ? (
+                  <>
+                    <GlobalCartIcon />
+                    <UserButton afterSignOutUrl="/" />
+                  </>
+                ) : (
+                  <Link className="inline-block font-bold" href="/login">
+                    Sign Up / Login
+                  </Link>
+                )}
                 <ToggleTheme />
               </div>
             </header>
 
-            <main className="p-8 h-[calc(100vh-96px)]">{children}</main>
+            <main className="p-8">{children}</main>
 
-            <footer className="grid place-content-center font-bold border-t h-8 ">
+            <footer className="sticky top-full grid h-8 place-content-center border-t font-bold">
               © progLearning
             </footer>
           </MantineProvider>
