@@ -1,6 +1,9 @@
 import { prisma } from "@/server/prisma/client";
 import { DeleteButton } from "./components/DeleteButton";
 import { getCarts } from "@/server/redis/cart";
+import { Button } from "@mantine/core";
+import { SubmitButton } from "@/app/components/SubmitButton";
+import { PaymentButton } from "./components/PaymentButton";
 
 export const dynamic = "force-dynamic";
 const getCartItems = async () => {
@@ -17,9 +20,13 @@ const getCartItems = async () => {
 
 export default async function Page() {
   const carts = await getCartItems();
+  const priceIds = [
+    "price_1OJbWBBrlAJ5ohGRUils0gBT",
+    "price_1OJaG0BrlAJ5ohGR0J7lFohi",
+  ];
 
   return (
-    <div className="">
+    <div className="space-y-4">
       <h2>CARTS</h2>
       <div className="flex">
         {carts?.map((cart) => (
@@ -31,6 +38,7 @@ export default async function Page() {
           </div>
         ))}
       </div>
+      <PaymentButton priceIds={priceIds} />
     </div>
   );
 }
