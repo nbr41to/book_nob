@@ -1,5 +1,6 @@
 "use client";
 
+import { SubmitButton } from "@/app/components/SubmitButton";
 import { updateCategory } from "@/server/category";
 import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { Category } from "@prisma/client";
@@ -11,8 +12,12 @@ type Props = {
 };
 
 export const UpdateForm: FC<Props> = ({ category }) => {
-  const [state, formAction] = useFormState(updateCategory, null);
-  const { pending } = useFormStatus();
+  const [state, formAction] = useFormState(updateCategory, {
+    data: null,
+    error: null,
+  });
+
+  console.log(state);
 
   return (
     <form action={formAction} className="relative w-80 space-y-8" noValidate>
@@ -24,10 +29,7 @@ export const UpdateForm: FC<Props> = ({ category }) => {
         defaultValue={category.name}
         required
       />
-      <Button type="submit" fullWidth>
-        Submit
-      </Button>
-      <LoadingOverlay visible={pending} />
+      <SubmitButton fullWidth>Submit</SubmitButton>
     </form>
   );
 };

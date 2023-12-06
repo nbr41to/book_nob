@@ -8,7 +8,10 @@ type Props = {
 };
 
 export const DeleteButton: FC<Props> = ({ id }) => {
-  const [_, formAction] = useFormState(deleteCategory, null);
+  const [state, formAction] = useFormState(deleteCategory, {
+    data: null,
+    error: null,
+  });
 
   return (
     <form action={formAction}>

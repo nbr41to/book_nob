@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "カテゴリの追加 | BOOK^NOB 📚",
+};
+
 export default function Layout({
   children,
   modal,

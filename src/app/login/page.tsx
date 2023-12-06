@@ -1,5 +1,11 @@
 import { SignIn, SignUp, UserButton, auth } from "@clerk/nextjs";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ログイン | BOOK^NOB 📚",
+};
+
 export default async function Page() {
   const user = auth();
 

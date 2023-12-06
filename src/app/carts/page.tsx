@@ -1,9 +1,12 @@
 import { prisma } from "@/server/prisma/client";
 import { DeleteButton } from "./components/DeleteButton";
 import { getCarts } from "@/server/redis/cart";
-import { Button } from "@mantine/core";
-import { SubmitButton } from "@/app/components/SubmitButton";
 import { PaymentButton } from "./components/PaymentButton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "カート | BOOK^NOB 📚",
+};
 
 export const dynamic = "force-dynamic";
 const getCartItems = async () => {

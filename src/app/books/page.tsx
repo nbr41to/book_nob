@@ -1,8 +1,24 @@
 import { BookCard } from "./components/BookCard";
-import { getBooks } from "@/server/book";
+import { getBooks, getBooksByCategoryId } from "@/server/book";
 
-export default async function Page() {
+const getBookBySearchParams = async (searchParams: { category: string }) => {
+  if (searchParams.category) {
+    const books = await getBooksByCategoryId(Number(searchParams.category));
+
+    return books;
+  }
+
   const books = await getBooks();
+
+  return books;
+};
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { category: string };
+}) {
+  const books = await getBookBySearchParams(searchParams);
 
   return (
     <div>

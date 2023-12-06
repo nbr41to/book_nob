@@ -2,19 +2,12 @@ import { getOgImage } from "@/server/ogp";
 import Image from "next/image";
 import { FC } from "react";
 
-const getImageUrl = async (siteUrl: string) => {
-  /* OG画像を取得 */
-  const url = getOgImage(siteUrl);
-
-  return url;
-};
-
 type Props = {
   url: string;
 };
 
 export const BookImage: FC<Props> = async ({ url }) => {
-  const imageUrl = await getImageUrl(url);
+  const imageUrl = await getOgImage(url);
 
   return (
     <div className="relative min-h-[160px] min-w-[200px]">
