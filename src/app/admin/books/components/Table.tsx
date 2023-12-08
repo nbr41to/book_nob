@@ -5,6 +5,7 @@ import { Table as MantineTable } from "@mantine/core";
 import Link from "next/link";
 import { DeleteButton } from "./DeleteButton";
 import { BookWithCategory } from "@/types";
+import { formatDate } from "@/utils/date";
 
 type Props = {
   books: BookWithCategory[];
@@ -20,6 +21,8 @@ export const Table: FC<Props> = ({ books }) => {
           <MantineTable.Th>URL</MantineTable.Th>
           <MantineTable.Th>カテゴリ</MantineTable.Th>
           <MantineTable.Th>いいね！</MantineTable.Th>
+          <MantineTable.Th>作成日時</MantineTable.Th>
+          <MantineTable.Th>更新日時</MantineTable.Th>
         </MantineTable.Tr>
       </MantineTable.Thead>
 
@@ -31,6 +34,8 @@ export const Table: FC<Props> = ({ books }) => {
             <MantineTable.Td>{book.url}</MantineTable.Td>
             <MantineTable.Td>{book.category.name}</MantineTable.Td>
             <MantineTable.Td>{book.likes.length}</MantineTable.Td>
+            <MantineTable.Td>{formatDate(book.createdAt)}</MantineTable.Td>
+            <MantineTable.Td>{formatDate(book.updatedAt)}</MantineTable.Td>
             <MantineTable.Td>
               <Link href={`/admin/books/${book.id}`}>編集</Link>
             </MantineTable.Td>

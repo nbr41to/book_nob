@@ -1,12 +1,12 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { createBook, updateBook } from "@/server/book";
+import { updateBook } from "@/server/book";
 import { BookWithCategory } from "@/types";
 import { NumberInput, Select, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { Book, Category } from "@prisma/client";
-import { redirect, useRouter } from "next/navigation";
+import { Category } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
 
@@ -34,11 +34,18 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
     if (formState.data) {
       notifications.show({
         title: "Success",
-        message: "Book updated",
+        message: "Book updated!!",
       });
       router.back();
     }
-  }, [formState.data, router]);
+    if (formState.error) {
+      notifications.show({
+        title: "Error",
+        message: formState.error,
+        color: "red",
+      });
+    }
+  }, [formState, router]);
 
   return (
     <form action={formAction} className="w-80 space-y-3" noValidate>
@@ -74,9 +81,6 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
         defaultValue={book.price}
         error={formState.validationError?.price?._errors.join(" ")}
       />
-      {formState.error && (
-        <p className="font-bold text-red-500">{formState.error}</p>
-      )}
       <SubmitButton fullWidth>送信</SubmitButton>
     </form>
   );

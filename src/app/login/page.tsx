@@ -1,16 +1,26 @@
 import { SignIn, SignUp, UserButton, auth } from "@clerk/nextjs";
 
-export default async function Page() {
-  const user = auth();
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "ログイン | BOOK^NOB 📚",
+};
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: {
+    signup: string;
+  };
+}) {
   return (
-    <div className="">
+    <div className="grid place-items-center py-20">
       <UserButton afterSignOutUrl="/" />
-      <SignUp />
-      <SignIn />
-      <pre>
-        <code>{JSON.stringify(user, null, 2)}</code>
-      </pre>
+      {searchParams.signup === "true" ? (
+        <SignUp signInUrl="/login" />
+      ) : (
+        <SignIn signUpUrl="/login?signup=true" />
+      )}
     </div>
   );
 }

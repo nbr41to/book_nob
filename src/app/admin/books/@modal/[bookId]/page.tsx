@@ -1,7 +1,7 @@
-import { Modal } from "@/app/components/Modal";
 import { UpdateForm } from "./components/UpdateForm";
 import { getCategories } from "@/server/category";
 import { getBookById } from "@/server/book";
+import { ParallelModal } from "@/app/components/ParallelModal";
 
 export default async function Page({ params }: { params: { bookId: string } }) {
   const categories = await getCategories();
@@ -13,11 +13,11 @@ export default async function Page({ params }: { params: { bookId: string } }) {
   }
 
   return (
-    <Modal>
+    <ParallelModal>
       <div className="mx-auto w-fit space-y-8 pb-8">
         <h2 className="text-2xl font-bold">Update Book</h2>
         <UpdateForm book={book} categories={categories} />
       </div>
-    </Modal>
+    </ParallelModal>
   );
 }

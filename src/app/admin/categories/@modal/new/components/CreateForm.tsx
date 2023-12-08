@@ -1,25 +1,37 @@
 "use client";
 
-import { createBook } from "@/server/book";
+import { SubmitButton } from "@/app/components/SubmitButton";
 import { createCategory } from "@/server/category";
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
-import { Book } from "@prisma/client";
-import { FC } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { TextInput } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
+import { FC, useEffect } from "react";
+import { useFormState } from "react-dom";
 
-type State = {
-  data: Book | null;
-  error: string | null;
-};
-
-const initialState: State = {
-  data: null,
-  error: null,
-};
-
+// TODO: 完了したらデータを更新したいけどParallel Routesを使うとrevalidatePathが使えない
 export const CreateForm: FC = () => {
-  const [state, formAction] = useFormState(createCategory, initialState);
-  const { pending } = useFormStatus();
+  const router = useRouter();
+  const [FormState, formAction] = useFormState(createCategory, {
+    data: null,
+    error: null,
+  });
+
+  useEffect(() => {
+    if (FormState.data) {
+      notifications.show({
+        title: "Success",
+        message: "Category created!!",
+      });
+      router.back();
+    }
+    if (FormState.error) {
+      notifications.show({
+        title: "Error",
+        message: FormState.error,
+        color: "red",
+      });
+    }
+  }, [FormState, router]);
 
   return (
     <form action={formAction} className="relative w-80 space-y-8" noValidate>
@@ -28,13 +40,9 @@ export const CreateForm: FC = () => {
         label="Category name"
         placeholder="Technology"
         required
+        error={FormState.validationError?.name?._errors.join(" ")}
       />
-
-      <Button type="submit" fullWidth>
-        Submit
-      </Button>
-      {state.error && <p className="font-bold text-red-500">{state.error}</p>}
-      <LoadingOverlay visible={pending} />
+      <SubmitButton fullWidth>Submit</SubmitButton>
     </form>
   );
 };

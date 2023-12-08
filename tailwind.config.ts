@@ -17,5 +17,8 @@ const config: Config = {
     },
   },
   plugins: [],
+  corePlugins: {
+    // preflight: false, // TailwindCSSのデフォルトスタイルを無効化
+  },
 };
 export default config;

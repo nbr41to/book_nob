@@ -17,9 +17,9 @@ const initialState = {
 
 type Props = {
   categories: Category[];
+  onClose: () => void;
 };
-export const CreateForm: FC<Props> = ({ categories }) => {
-  const router = useRouter();
+export const CreateForm: FC<Props> = ({ categories, onClose }) => {
   const [formState, formAction] = useFormState(createBook, initialState);
 
   const categoryOptions = categories.map((category) => ({
@@ -32,14 +32,21 @@ export const CreateForm: FC<Props> = ({ categories }) => {
     if (formState.data) {
       notifications.show({
         title: "Success",
-        message: "Book created",
+        message: "Book created!!",
       });
-      router.back();
+      onClose();
     }
-  }, [formState.data, router]);
+    if (formState.error) {
+      notifications.show({
+        title: "Error",
+        message: formState.error,
+        color: "red",
+      });
+    }
+  }, [formState, onClose]);
 
   return (
-    <form action={formAction} className="w-80 space-y-3" noValidate>
+    <form action={formAction} className="h-[340px] w-80 space-y-3" noValidate>
       <TextInput
         name="title"
         label="Title"
@@ -68,9 +75,6 @@ export const CreateForm: FC<Props> = ({ categories }) => {
         required
         error={formState.validationError?.price?._errors.join(" ")}
       />
-      {formState.error && (
-        <p className="font-bold text-red-500">{formState.error}</p>
-      )}
       <SubmitButton fullWidth>送信</SubmitButton>
     </form>
   );

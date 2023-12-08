@@ -10,5 +10,5 @@ const bookSchema = z.object({
   price: z.coerce.number().min(0, { message: "0以上の値を入力してください。" }),
 });
 
+export const bookCreateSchema = bookSchema.omit({ id: true });
 export const bookUpdateSchema = bookSchema;
-export const bookCreateSchema = bookUpdateSchema.omit({ id: true });

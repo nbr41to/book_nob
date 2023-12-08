@@ -1,18 +1,41 @@
 "use client";
 
+import { SubmitButton } from "@/app/components/SubmitButton";
 import { updateCategory } from "@/server/category";
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { Category } from "@prisma/client";
-import { FC } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { FC, useEffect } from "react";
+import { useFormState } from "react-dom";
 
 type Props = {
   category: Category;
 };
 
 export const UpdateForm: FC<Props> = ({ category }) => {
-  const [state, formAction] = useFormState(updateCategory, null);
-  const { pending } = useFormStatus();
+  const router = useRouter();
+  const [formState, formAction] = useFormState(updateCategory, {
+    data: null,
+    error: null,
+  });
+
+  useEffect(() => {
+    if (formState.data) {
+      notifications.show({
+        title: "Success",
+        message: "Category updated",
+      });
+      router.back();
+    }
+    if (formState.error) {
+      notifications.show({
+        title: "Error",
+        message: formState.error,
+        color: "red",
+      });
+    }
+  }, [formState, router]);
 
   return (
     <form action={formAction} className="relative w-80 space-y-8" noValidate>
@@ -23,11 +46,9 @@ export const UpdateForm: FC<Props> = ({ category }) => {
         placeholder="Technology"
         defaultValue={category.name}
         required
+        error={formState.validationError?.name?._errors.join(" ")}
       />
-      <Button type="submit" fullWidth>
-        Submit
-      </Button>
-      <LoadingOverlay visible={pending} />
+      <SubmitButton fullWidth>Submit</SubmitButton>
     </form>
   );
 };

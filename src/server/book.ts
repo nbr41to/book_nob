@@ -8,12 +8,27 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 import { ZodError, ZodFormattedError, z } from "zod";
 import { isZodError } from "@/utils/error";
+import { FormActionState } from "@/types";
 
 /**
- * 本の一覧を取得する
+ * 本の一覧をすべて取得する
  */
 export const getBooks = async () => {
   const books = await prisma.book.findMany({
+    include: {
+      category: true,
+    },
+  });
+
+  return books;
+};
+
+/**
+ * カテゴリーIDから本の一覧を取得する
+ */
+export const getBooksByCategoryId = async (categoryId: number) => {
+  const books = await prisma.book.findMany({
+    where: { categoryId },
     include: {
       category: true,
     },
@@ -46,9 +61,9 @@ type State = {
  * 本の新規作成
  */
 export const createBook = async (
-  prevState: State,
+  prevState: FormActionState<Book, typeof bookCreateSchema>,
   formData: FormData,
-): Promise<State> => {
+): Promise<FormActionState<Book, typeof bookCreateSchema>> => {
   try {
     const data: Prisma.BookUncheckedCreateInput = {
       title: String(formData.get("title")),
@@ -64,6 +79,9 @@ export const createBook = async (
     const book = await prisma.book.create({
       data: validated,
     });
+
+    /* Refetch */
+    revalidatePath("/admin/books");
 
     return {
       data: book,

@@ -31,7 +31,7 @@ export const Table: FC<Props> = ({ categories }) => {
             <MantineTable.Td>{formatDate(category.createdAt)}</MantineTable.Td>
             <MantineTable.Td>{formatDate(category.updatedAt)}</MantineTable.Td>
             <MantineTable.Td>
-              <Link href={`/admin/categories/${category.id}`}>詳細</Link>
+              <Link href={`/admin/categories/${category.id}`}>編集</Link>
             </MantineTable.Td>
             <MantineTable.Td>
               <DeleteButton id={category.id} />
