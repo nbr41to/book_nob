@@ -10,6 +10,7 @@ import { ToggleTheme } from "./components/ToggleTheme";
 import { Notifications as MantineNotifications } from "@mantine/notifications";
 import { ClerkProvider, UserButton, auth } from "@clerk/nextjs";
 import { GlobalCartIcon } from "./components/GlobalCartIcon";
+import { getUserRole } from "@/server/clerk/metadata";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,16 @@ export const metadata: Metadata = {
   description: "世界最大の本サイト",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { userId }: { userId: string | null } = auth();
-  const isAdmin = userId === process.env.ADMIN_USER_ID;
+  const { userId } = auth();
+  const isLoggedIn = !!userId;
+
+  const role = await getUserRole(userId);
+  const isAdmin = !!userId && role === "admin";
 
   return (
     <ClerkProvider>
@@ -34,7 +38,7 @@ export default function RootLayout({
         </head>
         <body className={`${inter.className} min-h-[100dvh]`}>
           <MantineProvider defaultColorScheme="dark">
-            <MantineNotifications />
+            <MantineNotifications position="top-center" />
             <header className="flex h-16 items-center justify-between border-b px-4 py-3">
               <div className="flex items-end gap-4">
                 <Link className="group text-2xl font-bold" href="/">
@@ -51,6 +55,16 @@ export default function RootLayout({
                   >
                     Books
                   </Link>
+                  {/* LoggedIn Menu */}
+                  {isLoggedIn && (
+                    <Link
+                      className="inline-block hover:-translate-y-[2px]"
+                      href="/mypage"
+                    >
+                      MyPage
+                    </Link>
+                  )}
+                  {/* Admin Menu */}
                   {isAdmin && (
                     <div className="inline-flex space-x-4">
                       <div className="border-l pl-4">
@@ -73,7 +87,7 @@ export default function RootLayout({
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                {userId ? (
+                {isLoggedIn ? (
                   <>
                     <GlobalCartIcon />
                     <UserButton afterSignOutUrl="/" />

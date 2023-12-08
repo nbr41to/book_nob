@@ -32,11 +32,18 @@ export const CreateForm: FC<Props> = ({ categories }) => {
     if (formState.data) {
       notifications.show({
         title: "Success",
-        message: "Book created",
+        message: "Book created!!",
       });
       router.back();
     }
-  }, [formState.data, router]);
+    if (formState.error) {
+      notifications.show({
+        title: "Error",
+        message: formState.error,
+        color: "red",
+      });
+    }
+  }, [formState, router]);
 
   return (
     <form action={formAction} className="w-80 space-y-3" noValidate>
@@ -68,9 +75,6 @@ export const CreateForm: FC<Props> = ({ categories }) => {
         required
         error={formState.validationError?.price?._errors.join(" ")}
       />
-      {formState.error && (
-        <p className="font-bold text-red-500">{formState.error}</p>
-      )}
       <SubmitButton fullWidth>送信</SubmitButton>
     </form>
   );

@@ -1,9 +1,8 @@
 "use server";
 
 import "server-only";
-import { Book, Category, Prisma } from "@prisma/client";
+import { Category, Prisma } from "@prisma/client";
 import { prisma } from "./prisma/client";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import {
   categoryCreateSchema,
@@ -19,6 +18,17 @@ export const getCategories = async () => {
   const categories = await prisma.category.findMany();
 
   return categories;
+};
+
+/**
+ * IDからカテゴリを取得する
+ */
+export const getCategoryById = async (categoryId: number) => {
+  const category = await prisma.category.findUnique({
+    where: { id: categoryId },
+  });
+
+  return category;
 };
 
 /**
@@ -40,9 +50,6 @@ export const createCategory = async (
     const category = await prisma.category.create({
       data: validated,
     });
-
-    /* Refetch */
-    revalidatePath("/admin/categories");
 
     return {
       data: category,
@@ -88,9 +95,6 @@ export const updateCategory = async (
       where: { id: data.id as number }, // TODO: as number 再考
       data: validated,
     });
-
-    /* Refetch */
-    revalidatePath("/admin/categories"); // TODO: ここに書いてはいけない
 
     return {
       data: category,

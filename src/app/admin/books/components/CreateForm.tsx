@@ -1,8 +1,7 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { updateBook } from "@/server/book";
-import { BookWithCategory } from "@/types";
+import { createBook } from "@/server/book";
 import { NumberInput, Select, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Category } from "@prisma/client";
@@ -17,26 +16,25 @@ const initialState = {
 };
 
 type Props = {
-  book: BookWithCategory;
   categories: Category[];
+  onClose: () => void;
 };
-export const UpdateForm: FC<Props> = ({ book, categories }) => {
-  const router = useRouter();
-  const [formState, formAction] = useFormState(updateBook, initialState);
+export const CreateForm: FC<Props> = ({ categories, onClose }) => {
+  const [formState, formAction] = useFormState(createBook, initialState);
 
   const categoryOptions = categories.map((category) => ({
     value: category.id.toString(),
     label: category.name,
   }));
 
-  /* 更新成功時の処理 */
+  /* 作成成功時の処理 */
   useEffect(() => {
     if (formState.data) {
       notifications.show({
         title: "Success",
-        message: "Book updated!!",
+        message: "Book created!!",
       });
-      router.back();
+      onClose();
     }
     if (formState.error) {
       notifications.show({
@@ -45,17 +43,15 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
         color: "red",
       });
     }
-  }, [formState, router]);
+  }, [formState, onClose]);
 
   return (
-    <form action={formAction} className="w-80 space-y-3" noValidate>
-      <input type="hidden" name="bookId" value={book.id} />
+    <form action={formAction} className="h-[340px] w-80 space-y-3" noValidate>
       <TextInput
         name="title"
         label="Title"
         placeholder="Title"
         required
-        defaultValue={book.title}
         error={formState.validationError?.title?._errors.join(" ")}
       />
       <TextInput
@@ -63,14 +59,13 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
         label="URL"
         placeholder="URL"
         required
-        defaultValue={book.url}
         error={formState.validationError?.url?._errors.join(" ")}
       />
       <Select
         label="Category"
         name="categoryId"
         required
-        defaultValue={book.categoryId.toString()}
+        defaultValue={categoryOptions[0].value}
         data={categoryOptions}
       />
       <NumberInput
@@ -78,7 +73,6 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
         label="Price"
         placeholder="0"
         required
-        defaultValue={book.price}
         error={formState.validationError?.price?._errors.join(" ")}
       />
       <SubmitButton fullWidth>送信</SubmitButton>

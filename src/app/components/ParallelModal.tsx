@@ -1,17 +1,18 @@
 "use client";
 
 import { Modal as MantineModal } from "@mantine/core";
+import { useRouter } from "next/navigation";
 import { FC, ReactNode } from "react";
 
 type Props = {
-  opened: boolean;
-  onClose: () => void;
   children: ReactNode;
 };
 
-export const Modal: FC<Props> = ({ opened, onClose, children }) => {
+export const ParallelModal: FC<Props> = ({ children }) => {
+  const router = useRouter();
+
   return (
-    <MantineModal opened={opened} centered onClose={onClose}>
+    <MantineModal opened centered onClose={router.back}>
       {children}
     </MantineModal>
   );

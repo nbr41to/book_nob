@@ -80,6 +80,9 @@ export const createBook = async (
       data: validated,
     });
 
+    /* Refetch */
+    revalidatePath("/admin/books");
+
     return {
       data: book,
       error: null,
