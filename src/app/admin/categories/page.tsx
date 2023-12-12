@@ -1,4 +1,4 @@
-import { getCategories } from "@/server/category";
+import { getCategories } from "@/server/prisma/category";
 import { Table } from "./components/Table";
 import { Button } from "@mantine/core";
 import Link from "next/link";

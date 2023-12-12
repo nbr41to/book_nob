@@ -21,6 +21,7 @@ export const Table: FC<Props> = ({ books }) => {
           <MantineTable.Th>URL</MantineTable.Th>
           <MantineTable.Th>カテゴリ</MantineTable.Th>
           <MantineTable.Th>いいね！</MantineTable.Th>
+          <MantineTable.Th>Price ID</MantineTable.Th>
           <MantineTable.Th>作成日時</MantineTable.Th>
           <MantineTable.Th>更新日時</MantineTable.Th>
         </MantineTable.Tr>
@@ -34,6 +35,7 @@ export const Table: FC<Props> = ({ books }) => {
             <MantineTable.Td>{book.url}</MantineTable.Td>
             <MantineTable.Td>{book.category.name}</MantineTable.Td>
             <MantineTable.Td>{book.likes.length}</MantineTable.Td>
+            <MantineTable.Td>{book.stripePriceId}</MantineTable.Td>
             <MantineTable.Td>{formatDate(book.createdAt)}</MantineTable.Td>
             <MantineTable.Td>{formatDate(book.updatedAt)}</MantineTable.Td>
             <MantineTable.Td>

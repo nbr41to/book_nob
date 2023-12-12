@@ -1,5 +1,5 @@
 import { SubmitIconButton } from "@/app/components/SubmitIconButton";
-import { deleteBook } from "@/server/book";
+import { deleteBook } from "@/server/prisma/book";
 import { FC } from "react";
 import { useFormState } from "react-dom";
 

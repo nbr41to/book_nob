@@ -1,6 +1,6 @@
 import { UpdateForm } from "./components/UpdateForm";
-import { getCategories } from "@/server/category";
-import { getBookById } from "@/server/book";
+import { getCategories } from "@/server/prisma/category";
+import { getBookById } from "@/server/prisma/book";
 import { ParallelModal } from "@/app/components/ParallelModal";
 
 export default async function Page({ params }: { params: { bookId: string } }) {

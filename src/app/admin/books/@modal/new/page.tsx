@@ -1,4 +1,4 @@
-import { getCategories } from "@/server/category";
+import { getCategories } from "@/server/prisma/category";
 import { CreateForm } from "./components/CreateForm";
 import { ParallelModal } from "@/app/components/ParallelModal";
 

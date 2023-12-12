@@ -5,7 +5,7 @@ import { formatDate } from "@/utils/date";
 import { AddCartButton } from "./components/AddCartButton";
 import { getCarts } from "@/server/redis/cart";
 import type { Metadata, ResolvingMetadata } from "next";
-import { getBookById } from "@/server/book";
+import { getBookById } from "@/server/prisma/book";
 
 /* Metadata */
 type Props = {
