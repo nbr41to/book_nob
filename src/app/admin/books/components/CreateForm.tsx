@@ -2,17 +2,12 @@
 
 import { SubmitButton } from "@/app/components/SubmitButton";
 import { createBook } from "@/server/usecase/book";
+import { initialState } from "@/utils/formAction";
 import { NumberInput, Select, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Category } from "@prisma/client";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
-
-const initialState = {
-  data: null,
-  error: null,
-  validationError: null,
-};
 
 type Props = {
   categories: Category[];
@@ -43,6 +38,18 @@ export const CreateForm: FC<Props> = ({ categories, onClose }) => {
       });
     }
   }, [formState, onClose]);
+
+  if (categoryOptions.length === 0)
+    return (
+      <div className="h-[340px] w-80">
+        <p className="py-20 text-center text-xl">
+          Categoryがありません。
+          <br />
+          <br />
+          Categoryを作成してください。
+        </p>
+      </div>
+    );
 
   return (
     <form action={formAction} className="h-[340px] w-80 space-y-3" noValidate>

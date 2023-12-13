@@ -150,11 +150,7 @@ export const toggleBookLikes = async (prevState: any, formData: FormData) => {
 /**
  * 本の削除
  */
-export const deleteBook = async (prevState: any, formData: FormData) => {
-  const bookId = Number(formData.get("bookId"));
-  await prisma.book.delete({
+export const prismaBookDelete = async (bookId: number) =>
+  prisma.book.delete({
     where: { id: bookId },
   });
-
-  revalidatePath("/admin/books");
-};

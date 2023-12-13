@@ -3,18 +3,13 @@
 import { SubmitButton } from "@/app/components/SubmitButton";
 import { updateBook } from "@/server/prisma/book";
 import { BookWithCategory } from "@/types";
+import { initialState } from "@/utils/formAction";
 import { NumberInput, Select, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Category } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
-
-const initialState = {
-  data: null,
-  error: null,
-  validationError: null,
-};
 
 type Props = {
   book: BookWithCategory;

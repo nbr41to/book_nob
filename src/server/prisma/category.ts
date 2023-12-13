@@ -85,7 +85,6 @@ export const updateCategory = async (
       id: Number(formData.get("categoryId")),
       name: String(formData.get("name")),
     };
-    console.log(data);
 
     /* Validation */
     const validated = categoryUpdateSchema.parse(data);
