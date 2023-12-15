@@ -18,6 +18,21 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "BOOK^NOB 📚",
   description: "世界最大の本サイト",
+  metadataBase: new URL("https://book-nob-yjp6.vercel.app/"),
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    url: "https://book-nob-yjp6.vercel.app/",
+    siteName: "BOOK^NOB 📚",
+    images: [
+      {
+        url: "/ogp.png",
+        width: 320,
+        height: 320,
+        alt: "BOOK^NOB 📚",
+      },
+    ],
+  },
 };
 
 export default async function RootLayout({

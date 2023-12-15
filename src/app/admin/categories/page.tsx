@@ -7,7 +7,7 @@ export default async function Page() {
   const categories = await getCategories();
 
   return (
-    <div>
+    <div className="space-y-8">
       <div className="flex items-end justify-between">
         <h2 className="py-4 text-2xl font-bold">Categories</h2>
         <Button component={Link} href="/admin/categories/new">

@@ -3,6 +3,7 @@ import { getCategories } from "@/server/prisma/category";
 import { getBookById } from "@/server/prisma/book";
 import { ParallelModal } from "@/app/components/ParallelModal";
 
+// revalidateが動かない: https://github.com/vercel/next.js/issues/54173
 export default async function Page({ params }: { params: { bookId: string } }) {
   const categories = await getCategories();
   const bookId = Number(params.bookId);

@@ -4,14 +4,22 @@ import { Button } from "@mantine/core";
 import { FC } from "react";
 import { CreateFormModal } from "./CreateFormModal";
 import { useDisclosure } from "@mantine/hooks";
+import { Category } from "@prisma/client";
 
-export const CreateButton: FC = () => {
+type Props = {
+  categories: Category[];
+};
+export const CreateButton: FC<Props> = ({ categories }) => {
   const [opened, { open, close }] = useDisclosure();
 
   return (
     <>
       <Button onClick={open}>Add Book</Button>
-      <CreateFormModal opened={opened} onClose={close} />
+      <CreateFormModal
+        categories={categories}
+        opened={opened}
+        onClose={close}
+      />
     </>
   );
 };
