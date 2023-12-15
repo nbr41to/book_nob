@@ -2,8 +2,8 @@
 
 import "server-only";
 import { Book, Prisma } from "@prisma/client";
-import { prisma } from "./prisma/client";
-import { bookCreateSchema, bookUpdateSchema } from "./validations/book";
+import { prisma } from "./client";
+import { bookCreateSchema, bookUpdateSchema } from "../validations/book";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 import { ZodError, ZodFormattedError, z } from "zod";
@@ -60,50 +60,12 @@ type State = {
 /**
  * 本の新規作成
  */
-export const createBook = async (
-  prevState: FormActionState<Book, typeof bookCreateSchema>,
-  formData: FormData,
-): Promise<FormActionState<Book, typeof bookCreateSchema>> => {
-  try {
-    const data: Prisma.BookUncheckedCreateInput = {
-      title: String(formData.get("title")),
-      url: String(formData.get("url")),
-      categoryId: Number(formData.get("categoryId")),
-      price: Number(formData.get("price")),
-    };
-
-    /* Validation */
-    const validated = bookCreateSchema.parse(data);
-
-    /* Create */
-    const book = await prisma.book.create({
-      data: validated,
-    });
-
-    /* Refetch */
-    revalidatePath("/admin/books");
-
-    return {
-      data: book,
-      error: null,
-      validationError: null,
-    };
-  } catch (error) {
-    if (isZodError(error)) {
-      return {
-        data: null,
-        error: null,
-        validationError: error.format(),
-      };
-    }
-
-    return {
-      data: null,
-      error: "Internal server error",
-      validationError: null,
-    };
-  }
-};
+export const prismaBookCreate = async (
+  params: Prisma.BookUncheckedCreateInput,
+) =>
+  prisma.book.create({
+    data: params,
+  });
 
 /**
  * 本の更新
@@ -188,11 +150,7 @@ export const toggleBookLikes = async (prevState: any, formData: FormData) => {
 /**
  * 本の削除
  */
-export const deleteBook = async (prevState: any, formData: FormData) => {
-  const bookId = Number(formData.get("bookId"));
-  await prisma.book.delete({
+export const prismaBookDelete = async (bookId: number) =>
+  prisma.book.delete({
     where: { id: bookId },
   });
-
-  revalidatePath("/admin/books");
-};

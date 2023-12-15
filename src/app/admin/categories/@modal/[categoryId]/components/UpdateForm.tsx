@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { updateCategory } from "@/server/category";
+import { updateCategory } from "@/server/prisma/category";
 import { TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { Category } from "@prisma/client";

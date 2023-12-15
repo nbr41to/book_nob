@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { createCategory } from "@/server/category";
+import { createCategory } from "@/server/prisma/category";
 import { TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";

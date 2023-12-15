@@ -1,5 +1,5 @@
 import { Table } from "./components/Table";
-import { getBooks } from "@/server/book";
+import { getBooks } from "@/server/prisma/book";
 import { CreateButton } from "./components/CreateButton";
 
 export default async function Page() {

@@ -1,4 +1,4 @@
-import { getCategories } from "@/server/category";
+import { getCategories } from "@/server/prisma/category";
 import { Metadata } from "next";
 import Link from "next/link";
 

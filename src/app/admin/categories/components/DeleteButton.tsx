@@ -1,5 +1,7 @@
+"use client";
+
 import { SubmitIconButton } from "@/app/components/SubmitIconButton";
-import { deleteCategory } from "@/server/category";
+import { deleteCategory } from "@/server/prisma/category";
 import { FC } from "react";
 import { useFormState } from "react-dom";
 

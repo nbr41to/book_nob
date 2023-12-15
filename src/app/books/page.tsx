@@ -1,6 +1,6 @@
 import { getCarts } from "@/server/redis/cart";
 import { BookCard } from "./components/BookCard";
-import { getBooks, getBooksByCategoryId } from "@/server/book";
+import { getBooks, getBooksByCategoryId } from "@/server/prisma/book";
 
 const getBookBySearchParams = async (searchParams: { category: string }) => {
   if (searchParams.category) {

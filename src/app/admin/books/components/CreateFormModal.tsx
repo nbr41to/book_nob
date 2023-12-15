@@ -1,4 +1,4 @@
-import { getCategories } from "@/server/category";
+import { getCategories } from "@/server/prisma/category";
 import { CreateForm } from "./CreateForm";
 import { Modal } from "@/app/components/Modal";
 import { FC, Suspense } from "react";

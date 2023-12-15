@@ -2,12 +2,12 @@
 
 import "server-only";
 import { Category, Prisma } from "@prisma/client";
-import { prisma } from "./prisma/client";
+import { prisma } from "./client";
 import { revalidatePath } from "next/cache";
 import {
   categoryCreateSchema,
   categoryUpdateSchema,
-} from "./validations/category";
+} from "../validations/category";
 import { FormActionState } from "@/types";
 import { isZodError } from "@/utils/error";
 
@@ -85,7 +85,6 @@ export const updateCategory = async (
       id: Number(formData.get("categoryId")),
       name: String(formData.get("name")),
     };
-    console.log(data);
 
     /* Validation */
     const validated = categoryUpdateSchema.parse(data);

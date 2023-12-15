@@ -1,5 +1,5 @@
 import { UpdateForm } from "./components/UpdateForm";
-import { getCategoryById } from "@/server/category";
+import { getCategoryById } from "@/server/prisma/category";
 import { ParallelModal } from "@/app/components/ParallelModal";
 
 export default async function Page({
