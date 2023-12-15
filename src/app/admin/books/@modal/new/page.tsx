@@ -2,6 +2,7 @@ import { getCategories } from "@/server/prisma/category";
 import { CreateForm } from "./components/CreateForm";
 import { ParallelModal } from "@/app/components/ParallelModal";
 
+// revalidateが動かない: https://github.com/vercel/next.js/issues/54173
 export default async function Page() {
   const categories = await getCategories();
 

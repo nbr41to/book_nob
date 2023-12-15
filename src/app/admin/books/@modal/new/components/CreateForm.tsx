@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
 
+// revalidateが動かない: https://github.com/vercel/next.js/issues/54173
 type Props = {
   categories: Category[];
 };

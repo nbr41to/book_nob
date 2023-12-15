@@ -3,30 +3,24 @@ import { DeleteButton } from "./components/DeleteButton";
 import { getCarts } from "@/server/redis/cart";
 import { PaymentButton } from "./components/PaymentButton";
 import { Metadata } from "next";
+import { getBookWhereIn } from "@/server/prisma/book";
 
 export const metadata: Metadata = {
   title: "カート | BOOK^NOB 📚",
 };
 
-export const dynamic = "force-dynamic";
 const getCartItems = async () => {
   const carts = await getCarts();
 
   const itemIds = carts.map((id) => Number(id));
-  const cartItems = await prisma.book.findMany({
-    where: { id: { in: itemIds } },
-    include: { category: true },
-  });
+  const cartItems = await getBookWhereIn(itemIds);
 
   return cartItems;
 };
 
 export default async function Page() {
   const carts = await getCartItems();
-  const priceIds = [
-    "price_1OJbWBBrlAJ5ohGRUils0gBT",
-    "price_1OJaG0BrlAJ5ohGR0J7lFohi",
-  ];
+  const priceIds = carts.map((cart) => cart.stripePriceId);
 
   return (
     <div className="space-y-4">

@@ -1,7 +1,8 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { updateBook } from "@/server/prisma/book";
+import { updateBook } from "@/server/usecase/book";
+
 import { BookWithCategory } from "@/types";
 import { initialState } from "@/utils/formAction";
 import { NumberInput, Select, TextInput } from "@mantine/core";
@@ -45,6 +46,12 @@ export const UpdateForm: FC<Props> = ({ book, categories }) => {
   return (
     <form action={formAction} className="w-80 space-y-3" noValidate>
       <input type="hidden" name="bookId" value={book.id} />
+      <input
+        type="hidden"
+        name="stripeProductId"
+        value={book.stripeProductId}
+      />
+      <input type="hidden" name="stripePriceId" value={book.stripePriceId} />
       <TextInput
         name="title"
         label="Title"

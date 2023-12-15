@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmitButton } from "@/app/components/SubmitButton";
-import { toggleBookLikes } from "@/server/prisma/book";
+import { toggleBookLikes } from "@/server/usecase/book";
 import { useUser } from "@clerk/nextjs";
 import { FC } from "react";
 import { useFormState } from "react-dom";

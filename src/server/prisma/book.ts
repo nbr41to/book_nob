@@ -51,10 +51,16 @@ export const getBookById = async (bookId: number) => {
   return book;
 };
 
-type State = {
-  data: Book | null;
-  error: string | null; // その他のエラー
-  validationError: ZodFormattedError<z.infer<typeof bookCreateSchema>> | null; // バリデーションエラー
+/**
+ * 複数の指定したIDから本一覧を取得する
+ */
+export const getBookWhereIn = async (bookIds: number[]) => {
+  const books = await prisma.book.findMany({
+    where: { id: { in: bookIds } },
+    include: { category: true },
+  });
+
+  return books;
 };
 
 /**
@@ -70,82 +76,13 @@ export const prismaBookCreate = async (
 /**
  * 本の更新
  */
-export const updateBook = async (
-  prevState: State,
-  formData: FormData,
-): Promise<State> => {
-  try {
-    const data: Prisma.BookUncheckedUpdateInput = {
-      id: Number(formData.get("bookId")),
-      title: String(formData.get("title")),
-      url: String(formData.get("url")),
-      categoryId: Number(formData.get("categoryId")),
-      price: Number(formData.get("price")),
-    };
-
-    /* Validation */
-    const validated = bookUpdateSchema.parse(data);
-
-    /* Update */
-    const book = await prisma.book.update({
-      where: { id: validated.id },
-      data: validated,
-    });
-
-    // revalidateが動かない: https://github.com/vercel/next.js/issues/54173
-    revalidatePath("/admin/books");
-
-    return {
-      data: book,
-      error: null,
-      validationError: null,
-    };
-  } catch (error) {
-    if (isZodError(error)) {
-      return {
-        data: null,
-        error: null,
-        validationError: error.format(),
-      };
-    }
-
-    return {
-      data: null,
-      error: "Internal server error",
-      validationError: null,
-    };
-  }
-};
-
-/**
- * 本のいいねを1増やす
- */
-export const toggleBookLikes = async (prevState: any, formData: FormData) => {
-  const bookId = Number(formData.get("bookId"));
-  const { userId }: { userId: string | null } = auth();
-  if (!userId) return;
-
-  const book = await prisma.book.findUnique({
-    where: { id: bookId },
+export const prismaBookUpdate = async (
+  params: Prisma.BookUncheckedUpdateInput,
+) =>
+  prisma.book.update({
+    where: { id: params.id as number },
+    data: params,
   });
-  if (!book) return;
-
-  const liked = book.likes.includes(userId as string);
-
-  if (liked) {
-    await prisma.book.update({
-      where: { id: bookId },
-      data: { likes: { set: book.likes.filter((id) => id !== userId) } },
-    });
-  } else {
-    await prisma.book.update({
-      where: { id: bookId },
-      data: { likes: { push: userId } },
-    });
-  }
-
-  revalidatePath("/books/[bookId]");
-};
 
 /**
  * 本の削除
