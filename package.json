@@ -9,7 +9,7 @@
     "db-push": "npx prisma db push",
     "generate": "npx prisma generate",
     "studio": "npx prisma studio",
-    "lint": "next lint"
+    "lint": "eslint"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.5",
@@ -30,17 +30,28 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.0.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.14.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8",
+    "eslint": "^8.0.1",
     "eslint-config-next": "14.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8",
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "prisma": "^5.7.0",
     "tailwindcss": "^3.3.6",
-    "typescript": "^5"
+    "typescript": "*"
   }
 }

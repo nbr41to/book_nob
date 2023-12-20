@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { bookId: string } }) {
   const cartIds = await getCarts();
 
   return (
-    <div className="mx-auto w-fit font-bold">
+    <div className="mx-auto w-fit">
       <div className="space-y-3 py-4">
         <h2 className="text-2xl font-bold">{book.title}</h2>
         <a

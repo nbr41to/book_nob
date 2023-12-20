@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { FC, useEffect } from "react";
 import { useFormState } from "react-dom";
 
-// TODO: 完了したらデータを更新したいけどParallel Routesを使うとrevalidatePathが使えない
+// ISSUE: 完了したらデータを更新したいけどParallel Routesを使うとrevalidatePathが使えない
 export const CreateForm: FC = () => {
   const router = useRouter();
   const [FormState, formAction] = useFormState(createCategory, {

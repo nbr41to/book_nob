@@ -36,7 +36,7 @@ export const DeleteButton: FC<Props> = ({ id }) => {
           <div className="flex justify-center gap-4">
             <Button onClick={close}>キャンセル</Button>
             <form action={formAction}>
-              <input type="hidden" name="categoryId" value={id} />
+              <input type="hidden" name="bookId" value={id} />
               <SubmitButton variant="outline">削除する</SubmitButton>
             </form>
           </div>
