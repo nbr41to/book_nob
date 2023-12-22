@@ -26,7 +26,9 @@ export const PaymentButton: FC<Props> = ({ priceIds }) => {
       {priceIds.map((priceId) => (
         <input key={priceId} type="hidden" name="priceIds[]" value={priceId} />
       ))}
-      <SubmitButton>購入する</SubmitButton>
+      <SubmitButton size="xl" fullWidth>
+        購入する
+      </SubmitButton>
     </form>
   );
 };

@@ -5,7 +5,7 @@ import { authMiddleware } from "@clerk/nextjs";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 
 export default authMiddleware({
-  publicRoutes: ["/", "/books"],
+  publicRoutes: ["/", "/books", "/books/:bookId"], // 動的なパスには`:`を使用
 });
 
 export const config = {

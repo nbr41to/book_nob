@@ -15,7 +15,7 @@ export const DeleteButton: FC<Props> = ({ bookId }) => {
   return (
     <form action={formAction}>
       <input type="hidden" name="bookId" value={bookId} />
-      <SubmitButton>カートから削除</SubmitButton>
+      <SubmitButton size="xs">カートから削除</SubmitButton>
     </form>
   );
 };

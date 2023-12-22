@@ -128,6 +128,7 @@ export const updateBook = async (
     const currentBook = await getBookById(validated.id);
     if (!currentBook) throw new Error("Not found book.");
 
+    let book: Book | null = null;
     if (validated.price !== currentBook.price) {
       /* ProductとPriceの更新 */
       // Priceを作成する
@@ -142,6 +143,11 @@ export const updateBook = async (
         url: validated.url,
         default_price: price.id,
       });
+      /* DBを更新する */
+      book = await prismaBookUpdate({
+        ...validated,
+        stripePriceId: price.id,
+      });
       // PriceをArchive
       await stripeArchivePrice(validated.stripePriceId);
     } else {
@@ -150,10 +156,9 @@ export const updateBook = async (
         name: validated.title,
         url: validated.url,
       });
+      /* DBを更新する */
+      book = await prismaBookUpdate(validated);
     }
-
-    /* DBを更新する */
-    const book = await prismaBookUpdate(validated);
 
     // revalidateが動かない: https://github.com/vercel/next.js/issues/54173
     // revalidatePath("/admin/books");
@@ -219,6 +224,7 @@ export const deleteBook = async (
 ): Promise<FormActionState<Book>> => {
   try {
     const bookId = Number(formData.get("bookId"));
+    console.log(bookId);
 
     // Transaction
     const book = await prisma.$transaction(async (tx) => {
