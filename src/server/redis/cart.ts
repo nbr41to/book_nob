@@ -50,3 +50,11 @@ export const removeCart = async (prevState: any, formData: FormData) => {
   revalidatePath("/carts");
   revalidatePath("/", "layout");
 };
+
+/* カートから削除 */
+export const removeAllCart = async () => {
+  const { userId }: { userId: string | null } = auth();
+  if (!userId) return;
+
+  await kv.set(userId, []);
+};
