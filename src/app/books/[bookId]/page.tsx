@@ -65,12 +65,14 @@ export default async function Page({ params }: { params: { bookId: string } }) {
         </a>
       </div>
       <div className="space-y-3">
-        <div>
+        <div className="relative h-48">
           <Image
+            className="object-contain object-center"
             src={imageUrl || "https://placehold.jp/300x200.png"}
-            width={300}
-            height={200}
             alt="book image"
+            fill
+            priority
+            sizes="300px"
           />
         </div>
         <div className="flex gap-4">

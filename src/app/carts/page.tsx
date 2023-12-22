@@ -1,9 +1,9 @@
-import { prisma } from "@/server/prisma/client";
 import { DeleteButton } from "./components/DeleteButton";
-import { getCarts } from "@/server/redis/cart";
+import { getCarts, removeAllCart } from "@/server/redis/cart";
 import { PaymentButton } from "./components/PaymentButton";
 import { Metadata } from "next";
 import { getBookWhereIn } from "@/server/prisma/book";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "カート | BOOK^NOB 📚",
@@ -18,7 +18,17 @@ const getCartItems = async () => {
   return cartItems;
 };
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { success: string };
+}) {
+  /* 購入後カートの中身を削除 */
+  if (searchParams.success) {
+    await removeAllCart();
+    redirect("/paid");
+  }
+
   const carts = await getCartItems();
   const priceIds = carts.map((cart) => cart.stripePriceId);
 

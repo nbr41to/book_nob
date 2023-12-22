@@ -10,13 +10,14 @@ export const BookImage: FC<Props> = async ({ url }) => {
   const imageUrl = await getOgImage(url);
 
   return (
-    <div className="relative min-h-[160px] min-w-[200px]">
+    <div className="relative min-h-[160px]">
       <Image
         className="object-contain"
         src={imageUrl || "https://placehold.jp/200x160.png"}
         alt="book image"
         fill
         priority
+        sizes="200px"
       />
     </div>
   );
